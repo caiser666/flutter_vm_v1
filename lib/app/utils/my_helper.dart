@@ -47,6 +47,7 @@ class MyHelper {
     double contentPaddingVertical = 4.0,
     bool isDismissible = true,
     List<Widget> actions = const [],
+    Function? onWillPop,
   }) {
     Future<bool> _onWillPop() async {
       // if (!isDismissible) {
@@ -55,6 +56,10 @@ class MyHelper {
       //   return true;
       // }
 
+      if (onWillPop != null) {
+        onWillPop();
+        return false;
+      }
       return true;
     }
 

@@ -14,133 +14,136 @@ class PaymentView extends GetView<HomeController> {
       init: HomeController(),
       initState: (_) {},
       builder: (_) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('Pembayaran'),
-            centerTitle: true,
-          ),
-          body: Obx(
-            () => Column(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                        padding: EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(
-                            color: kAppColor_1,
-                            width: 1.0,
+        return WillPopScope(
+          onWillPop: () => controller.onWillPopPayment(context),
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text('Pembayaran'),
+              centerTitle: true,
+            ),
+            body: Obx(
+              () => Column(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 0),
-                              blurRadius: 4.0,
-                              spreadRadius: 0.5,
+                          padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(
                               color: kAppColor_1,
+                              width: 1.0,
                             ),
-                          ],
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0, 0),
+                                blurRadius: 4.0,
+                                spreadRadius: 0.5,
+                                color: kAppColor_1,
+                              ),
+                            ],
+                          ),
+                          alignment: Alignment.center,
+                          child: Column(
+                            children: [
+                              Text(
+                                "Total Harga yang harus dibayar:",
+                                style: TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.black38,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              SizedBox(height: 4.0),
+                              Text(
+                                "Rp. ${MyHelper().currencyformat(controller.totalPrice.value)}",
+                                style: TextStyle(
+                                  fontSize: 24.0,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            Text(
-                              "Total Harga yang harus dibayar:",
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.0),
+                            child: Text(
+                              "**Masukkan uang sesuai total harga",
                               style: TextStyle(
-                                fontSize: 12.0,
-                                color: Colors.black38,
+                                fontSize: 10.0,
+                                color: Colors.red,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
-                            SizedBox(height: 4.0),
-                            Text(
-                              "Rp. ${MyHelper().currencyformat(controller.totalPrice.value)}",
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.w600,
-                              ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    // width: Get.width,
+                    padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 24.0),
+                    color: Colors.black12,
+                    child: Column(
+                      children: [
+                        AdmissionFeeContainerWidget(
+                          admissionFee: controller.admissionFee.value,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            NominalContainerWidget(
+                              nominalList: controller.myNominalList,
+                              onClick: (nominal) =>
+                                  controller.onClickNominal(nominal),
                             ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  TextButtonWidget(
+                                    onClick: () =>
+                                        controller.onClickCancel(context),
+                                    label: "BATAL",
+                                    width: 144.0,
+                                    height: 36.0,
+                                    backgroundColor: Colors.red.shade900,
+                                    fontSize: 16.0,
+                                  ),
+                                  SizedBox(height: 16.0),
+                                  TextButtonWidget(
+                                    onClick: () => controller.onClickPay(context),
+                                    label: "BAYAR",
+                                    isDisable: controller.admissionFee.value <
+                                        controller.totalPrice.value,
+                                    width: 144.0,
+                                    height: 64.0,
+                                    backgroundColor: Colors.blue.shade900,
+                                    fontSize: 20.0,
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 12.0),
-                          child: Text(
-                            "**Masukkan uang sesuai total harga",
-                            style: TextStyle(
-                              fontSize: 10.0,
-                              color: Colors.red,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  // width: Get.width,
-                  padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 24.0),
-                  color: Colors.black12,
-                  child: Column(
-                    children: [
-                      AdmissionFeeContainerWidget(
-                        admissionFee: controller.admissionFee.value,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          NominalContainerWidget(
-                            nominalList: controller.myNominalList,
-                            onClick: (nominal) =>
-                                controller.onClickNominal(nominal),
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                TextButtonWidget(
-                                  onClick: () =>
-                                      controller.onClickCancel(context),
-                                  label: "BATAL",
-                                  width: 144.0,
-                                  height: 36.0,
-                                  backgroundColor: Colors.red.shade900,
-                                  fontSize: 16.0,
-                                ),
-                                SizedBox(height: 16.0),
-                                TextButtonWidget(
-                                  onClick: () => controller.onClickPay(context),
-                                  label: "BAYAR",
-                                  isDisable: controller.admissionFee.value <
-                                      controller.totalPrice.value,
-                                  width: 144.0,
-                                  height: 64.0,
-                                  backgroundColor: Colors.blue.shade900,
-                                  fontSize: 20.0,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );

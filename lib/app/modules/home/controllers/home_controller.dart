@@ -30,9 +30,7 @@ class HomeController extends GetxController {
   RxList<MyCartModel> myCartList = <MyCartModel>[].obs;
 
   void onClickAddProduct(ProductModel product) {
-    if (myCartList.any((cart) => cart.product == product)) {
-      print('Already exists!');
-    } else {
+    if (!myCartList.any((cart) => cart.product == product)) {
       MyCartModel cart = new MyCartModel(product: product);
       myCartList.add(cart);
     }
@@ -48,6 +46,20 @@ class HomeController extends GetxController {
         EasyLoading.dismiss();
       });
     });
+  }
+
+  DateTime? currentBackPressTime;
+
+  Future<bool> onWillPopHome(BuildContext context) async {
+    DateTime now = DateTime.now();
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      MyHelper().snackBarShow(context, "Tap back again to leave", 0);
+      return Future.value(false);
+    }
+    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+    return Future.value(false);
   }
 
   void onClickIncremetDecrementQuantity(MyCartModel myCart, int type) {
@@ -104,7 +116,11 @@ class HomeController extends GetxController {
     admissionFee.value += nominal.value;
   }
 
+  RxBool isPay = false.obs;
+  RxBool isPaymentSuccess = false.obs;
+
   Future<void> onClickPay(BuildContext context) async {
+    isPay.value = true;
     EasyLoading.show();
 
     double _changeMoney = admissionFee.value - totalPrice.value;
@@ -118,19 +134,23 @@ class HomeController extends GetxController {
 
     update();
 
-    await new Future.delayed(Duration(milliseconds: 1000), () async {
+    await new Future.delayed(Duration(milliseconds: 3000), () async {
+      isPaymentSuccess.value = true;
       EasyLoading.dismiss();
-      MyHelper().dialogShow(
-        context,
-        title: "",
-        content: SuccessDialogWidget(
-          changeMoney: _changeMoney,
-        ),
-        isDismissible: false,
-      );
+      MyHelper().dialogShow(context,
+          title: "",
+          content: SuccessDialogWidget(
+            changeMoney: _changeMoney,
+          ),
+          isDismissible: false,
+          onWillPop: () => onClickTransactionCancellation(context));
 
       await new Future.delayed(Duration(milliseconds: 5000), () async {
-        onClickTransactionCancellation(context);
+        try {
+          onClickTransactionCancellation(context);
+        } catch (e) {
+          print(e.toString());
+        }
       });
     });
   }
@@ -157,24 +177,19 @@ class HomeController extends GetxController {
     myCartList.clear();
     totalPrice.value = 0.0;
     admissionFee.value = 0.0;
+    isPay.value = false;
+    isPaymentSuccess.value = false;
 
     Navigator.of(context).popUntil((route) => route.isFirst);
 
     update();
   }
 
-  DateTime? currentBackPressTime;
-
-  Future<bool> onWillPopHome(BuildContext context) async {
-    DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > Duration(seconds: 2)) {
-      currentBackPressTime = now;
-      MyHelper().snackBarShow(context, "Tap back again to leave", 0);
-      print("onWillPopHome");
+  Future<bool> onWillPopPayment(BuildContext context) async {
+    if (isPay.value) {
       return Future.value(false);
+    } else {
+      return Future.value(true);
     }
-    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-    return Future.value(false);
   }
 }

@@ -15,8 +15,8 @@ mobile App for simple vending machine
      <td>2. Home View (With Added Items)</td>
   </tr>
   <tr>
-    <td valign="center"><img src="https://github.com/caiser666/flutter_alarm_v1/blob/main/assets/screenshots/1.jpg" width="320"></td>
-    <td valign="center"><img src="https://github.com/caiser666/flutter_alarm_v1/blob/main/assets/screenshots/2.jpg" width="320"></td>
+    <td valign="center"><img src="https://github.com/caiser666/flutter_vm_v1/blob/main/assets/screenshots/1.jpg" width="320"></td>
+    <td valign="center"><img src="https://github.com/caiser666/flutter_vm_v1/blob/main/assets/screenshots/2.jpg" width="320"></td>
   </tr>
 </table>
 
@@ -26,8 +26,8 @@ mobile App for simple vending machine
      <td>4. Payment View</td>
   </tr>
   <tr>
-    <td valign="center"><img src="https://github.com/caiser666/flutter_alarm_v1/blob/main/assets/screenshots/3.jpg" width="320"></td>
-    <td valign="center"><img src="https://github.com/caiser666/flutter_alarm_v1/blob/main/assets/screenshots/4.jpg" width="320"></td>
+    <td valign="center"><img src="https://github.com/caiser666/flutter_vm_v1/blob/main/assets/screenshots/3.jpg" width="320"></td>
+    <td valign="center"><img src="https://github.com/caiser666/flutter_vm_v1/blob/main/assets/screenshots/4.jpg" width="320"></td>
   </tr>
 </table>
 

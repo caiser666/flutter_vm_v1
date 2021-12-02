@@ -32,7 +32,7 @@ mobile App for simple vending machine
 </table>
 
 
-## Develompent Tools
+### Develompent Tools
 
 - code editor = Visual Studio Code & Android Studio
 - os = Windows 10

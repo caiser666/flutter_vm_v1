@@ -1,16 +1,43 @@
 # flutter_vm_v1
 
-A new Flutter project.
+mobile App for simple vending machine
 
-## Getting Started
+### Download Apps
 
-This project is a starting point for a Flutter application.
+1. Android --> https://github.com/caiser666/flutter_vm_v1_apps.git
+2. IOS --> Coming Soon
 
-A few resources to get you started if this is your first Flutter project:
+### Screenshot
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<table>
+  <tr>
+     <td>1. Home View (Without Adding Items)</td>
+     <td>2. Home View (With Added Items)</td>
+  </tr>
+  <tr>
+    <td valign="center"><img src="https://github.com/caiser666/flutter_alarm_v1/blob/main/assets/screenshots/1.jpg" width="320"></td>
+    <td valign="center"><img src="https://github.com/caiser666/flutter_alarm_v1/blob/main/assets/screenshots/2.jpg" width="320"></td>
+  </tr>
+</table>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<table>
+  <tr>
+     <td>3. Cart View</td>
+     <td>4. Payment View</td>
+  </tr>
+  <tr>
+    <td valign="center"><img src="https://github.com/caiser666/flutter_alarm_v1/blob/main/assets/screenshots/3.jpg" width="320"></td>
+    <td valign="center"><img src="https://github.com/caiser666/flutter_alarm_v1/blob/main/assets/screenshots/4.jpg" width="320"></td>
+  </tr>
+</table>
+
+
+## Develompent Tools
+
+- code editor = Visual Studio Code & Android Studio
+- os = Windows 10
+- laptop = Asus GL552VW
+- device testing = Samsung A52 & Redmin Note 8
+
+Okay, maybe that's it. If you want to know more clearly can visit the link: https://my-portofolio-caiser666.web.app/
+
